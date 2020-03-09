@@ -1,5 +1,7 @@
 from django.db import models
-from store.models import Store, User
+from store.models import Store
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 
