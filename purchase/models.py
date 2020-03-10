@@ -6,6 +6,12 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
+class UserType(models.Model):
+    usertype_user = models.OneToOneField(
+        User, on_delete=models.CASCADE)
+    usertype_type = models.SlugField(default='customer')
+
+
 class Transaction(models.Model):
     transaction_buyer = models.OneToOneField(
         User, on_delete=models.CASCADE)

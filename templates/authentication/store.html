@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Back Office - Ten Flags</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:400,600,900&display=swap');
+
+        body {
+            background-color: rgb(151, 190, 216);
+        }
+
+        .main_body {
+            position: relative;
+            border-radius: 5px;
+            margin-top: 10%;
+            height: 200px;
+            width: 500px;
+            background-color: #fff;
+
+            display: grid;
+            grid-template-columns: 1fr 1.25fr;
+        }
+
+        .main_body:before,
+        .main_body:after {
+            z-index: -1;
+            position: absolute;
+            content: "";
+            bottom: 25px;
+            left: 10px;
+            width: 50%;
+            top: 80%;
+            max-width: 300px;
+            background: #777;
+            -webkit-box-shadow: 0 35px 20px #777;
+            -moz-box-shadow: 0 35px 20px #777;
+            box-shadow: 0 35px 20px #777;
+            -webkit-transform: rotate(-8deg);
+            -moz-transform: rotate(-8deg);
+            -o-transform: rotate(-8deg);
+            -ms-transform: rotate(-8deg);
+            transform: rotate(-8deg);
+        }
+
+        .main_body:after {
+            -webkit-transform: rotate(8deg);
+            -moz-transform: rotate(8deg);
+            -o-transform: rotate(8deg);
+            -ms-transform: rotate(8deg);
+            transform: rotate(8deg);
+            right: 10px;
+            left: auto;
+        }
+
+        .image_side {
+            background: url('https://images.freeimages.com/images/large-previews/c10/chocolate-brownie-1322129.jpg');
+            background-size: cover;
+            position: relative;
+            left: -15px;
+            border-bottom-left-radius: 5px;
+            border-top-left-radius: 5px;
+        }
+
+        .form-control,
+        .custom-select {
+            border: 0;
+            border-radius: 0;
+            ;
+            border-bottom: 1px #333 solid;
+        }
+
+        .sup_text {
+            font-family: 'Alegreya Sans SC';
+            font-size: x-large;
+            font-weight: 900;
+        }
+
+        input[type=email]:invalid,
+        [type=email].form-control:invalid {
+            border-color: crimson;
+            border-width: 2px;
+        }
+
+        textarea:focus,
+        select.custom-select:focus,
+        textarea.form-control:focus,
+        input.form-control:focus,
+        input[type=text]:focus,
+        input[type=password]:focus,
+        input[type=email]:focus,
+        input[type=email]:invalid,
+        input[type=number]:focus,
+        [type=text].form-control:focus,
+        [type=password].form-control:focus,
+        [type=email].form-control:focus,
+        [type=email].form-control:invalid,
+        [type=tel].form-control:focus,
+        [contenteditable].form-control:focus {
+            box-shadow: inset 0 -1px 0 #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    {% for x in item_list %}
+    <div class="container main_body">
+
+        <div class="image_side">
+
+        </div>
+
+        <form action="{% url 'add_item' %}" method="post">
+
+            {% csrf_token %}
+
+            <div class="detail_side">
+
+                <label class="sup_text">{{ x.item_name}}</label>
+
+                <input type="hidden" value={{ x.item_id }} name="product">
+
+                <span class="badge badge-danger">
+                    R{{ x.item_price }}
+                </span>
+
+                <br>
+
+                <small>
+                    <i>
+                        {{ x.item_description }}
+                    </i>
+                </small>
+
+                <div class="input-group mt-2">
+
+                    <select class="custom-select alert-info col-sm-8" id="inputGroupSelect01" name="quantity">
+                        <option value=1 selected>1</option>
+                        <option value=2>2</option>
+                        <option value=3>3</option>
+                        <option value=4>4</option>
+                        <option value=5>5</option>
+                    </select>
+
+                    <div class="input-group-append">
+
+                        <button type="submit" class="btn btn-sm btn-info">
+                            <div class="fas fa-plus"></div> <b>Add Item</b>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    {% endfor %}
+
+
+    <div class="temp_list">
+
+        {% for i in temp_list %}
+
+        {{ i.temp_item.item_name }}
+        {{ i.temp_quantity }}
+        {{ i.temp_total }}
+
+        <form action="delete_item" method="post">
+
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-danger btn-sm">
+
+                <div class="fas fa-times"></div>
+
+            </button>
+
+            <input type="hidden" value="jhsgfdyt" name="product">
+
+        </form>
+        {% endfor %}
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
